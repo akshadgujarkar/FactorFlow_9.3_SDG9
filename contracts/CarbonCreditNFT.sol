@@ -60,14 +60,14 @@ contract CarbonCreditNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     /**
      * @dev Mint a new carbon credit NFT. Only callable by minter (platform/seller).
      * @param to Initial owner (seller)
-     * @param tokenURI Metadata URI (project details, images, verification)
+     * @param tokenUri Metadata URI (project details, images, verification)
      * @param projectId Off-chain project ID
      * @param volumeTCO2e Volume in tonnes CO2e
      * @param verificationProofHash Hash of verification proof
      */
     function mint(
         address to,
-        string calldata tokenURI,
+        string calldata tokenUri,
         string calldata projectId,
         uint256 volumeTCO2e,
         bytes32 verificationProofHash
@@ -77,7 +77,7 @@ contract CarbonCreditNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         volumeTCO2eOf[tokenId] = volumeTCO2e;
         verificationProofOf[tokenId] = verificationProofHash;
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+        _setTokenURI(tokenId, tokenUri);
         return tokenId;
     }
 
@@ -147,7 +147,7 @@ contract CarbonCreditNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
     function _update(address to, uint256 tokenId, address auth)
         internal
-        override(ERC721, ERC721URIStorage)
+        override
         returns (address)
     {
         if (retired[tokenId]) revert TokenRetired();

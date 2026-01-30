@@ -16,14 +16,14 @@ export function getCarbonCreditNFTContract(signer: Signer): Contract {
   if (!address) {
     throw new Error("VITE_CARBON_CREDIT_NFT_ADDRESS is not set");
   }
-  return new Contract(address, CarbonCreditNFTAbi as string[], signer);
+  return new Contract(address, CarbonCreditNFTAbi.abi, signer);
 }
 
 export async function getProvider(): Promise<BrowserProvider> {
   if (typeof window === "undefined" || !window.ethereum) {
     throw new Error("MetaMask not installed");
   }
-  return new BrowserProvider(window.ethereum);
+  return new BrowserProvider(window.ethereum as any);
 }
 
 export async function getSigner(): Promise<Signer> {
