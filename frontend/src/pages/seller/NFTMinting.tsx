@@ -100,9 +100,11 @@ export default function NFTMinting() {
         location,
       });
       const verificationProofHash = ethers.keccak256(ethers.toUtf8Bytes(`${project.id}-${project.volumeTCO2e}-verified`));
+      const tokenURIHash = ethers.keccak256(ethers.toUtf8Bytes(tokenURI));
+      console.log("token uri " + tokenURI)
       const tx = await contract.mint(
         account,
-        tokenURI,
+        tokenURIHash,
         project.id,
         project.volumeTCO2e,
         verificationProofHash
@@ -123,6 +125,7 @@ export default function NFTMinting() {
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Mint failed";
+      console.log(message)
       toast({ title: "Mint failed", description: message, variant: "destructive" });
     } finally {
       setIsMinting(false);
